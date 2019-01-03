@@ -6,7 +6,7 @@ int CellGenerator::generateValue() {
 
 CellGenerator::CellGenerator(int fieldSize, int genError) : generationError(genError),
                                                             distributionForValues({TWO_PROPABILITY, FOUR_PROPABILITY}),
-                                                            distributionForCells(0, fieldSize - 1), engine(rd()) {
+                                                            engine(rd()) {
     for (int i = 0; i < fieldSize; ++i) {
         emptyPositions.insert(i);
     }
@@ -15,15 +15,13 @@ CellGenerator::CellGenerator(int fieldSize, int genError) : generationError(genE
 int CellGenerator::generatePosition() {
     if (emptyPositions.empty())
         return generationError;
-    //в продакшен я бы такое не пустил
-    while (1) {
-        auto cellNumber = distributionForCells(engine);
-        if (emptyPositions.count(cellNumber)) {
-            emptyPositions.erase(cellNumber);
-            return cellNumber;
-        }
-    }
-    return generationError;
+    std::uniform_int_distribution<> distributionForCells(0, emptyPositions.size() - 1);
+    auto iterNumber = distributionForCells(engine);
+    auto it = emptyPositions.begin();
+    std::advance(it, iterNumber);
+    auto cellNumber = *it;
+    emptyPositions.erase(cellNumber);
+    return cellNumber;
 }
 
 void CellGenerator::setEmptyCell(int cellNumber) {

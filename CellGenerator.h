@@ -23,7 +23,6 @@ private:
     constexpr static double FOUR_PROPABILITY = 9.09090909;
     std::random_device rd;
     std::discrete_distribution<> distributionForValues;
-    std::uniform_int_distribution<> distributionForCells;
     std::mt19937 engine;
     std::set<int> emptyPositions;
 };
