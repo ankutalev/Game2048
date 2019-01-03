@@ -1,6 +1,6 @@
 #pragma once
 
-#include <set>
+#include <unordered_set>
 #include <random>
 
 class CellGenerator {
@@ -24,7 +24,7 @@ private:
     std::random_device rd;
     std::discrete_distribution<> distributionForValues;
     std::mt19937 engine;
-    std::set<int> emptyPositions;
+    std::unordered_set<int> emptyPositions;
 };
 
 
